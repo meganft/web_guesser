@@ -1,15 +1,20 @@
 <html>
-  <head></head>
-  <body>
-    <p>
-     Let's do this. Guess a number.
-    </p>
-    <p>
-     <%= message %>
-    </p>
-  </body>
+  <head>
+    <meta charset="utf-8">
+    <title>Web Guesser</title>
+    <style>
+       body {
+         background: <%= background %>;
+       }
+     </style>
+  </head>
   <form>
     <input type='text' name='guess' />
     <input type='submit' value='Guess!'/>
   </form>
+  <body>
+    <p>
+     <%= message %>
+    </p>
+  </body>
 </html>
