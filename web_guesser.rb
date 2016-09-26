@@ -5,29 +5,22 @@ SECRET_NUMBER = rand(100)
 
 get '/' do
   guess = params["guess"].to_i
-  message = check_guess(guess)
-  background = background_color(guess)
+  message, background = check_guess(guess)
   erb :index, :locals => {:number => SECRET_NUMBER, :message => message, :background => background}
 end
 
 def check_guess(guess)
-  difference = (SECRET_NUMBER - guess).abs
-  if guess < SECRET_NUMBER
-    difference > 5 ? "Way too low!" : "Too low!"
+  if guess.zero?
+    return ["Guess a number.", "#f2f2f2"]
+  elsif guess <  (SECRET_NUMBER - 5)
+    return ["Way too low!", "#e60000"]
+  elsif guess > (SECRET_NUMBER + 5)
+    return ["Way too high!", "#e60000"]
+  elsif guess < SECRET_NUMBER
+    return ["Too low!", "#ffcccc"]
   elsif guess > SECRET_NUMBER
-    difference > 5 ? "Way too high!" : "Too high!"
+    return ["Too high!", "#ffcccc"]
   else
-    "You got it right! <br> The Secret Number was #{SECRET_NUMBER}!"
-  end
-end
-
-def color(message)
-  case message
-    when "Way too low!" || "Way too high!"
-      'red'
-    when "Too low!" || "Too high!"
-      '#FCDFDC'
-    when "You got it right!"
-      'green'
+    return ["You got it right! <br> The secret number was #{SECRET_NUMBER}.", "#00cc44"]
   end
 end
